@@ -1,5 +1,6 @@
 import React from 'react'
 import BookShelf from './BookShelf'
+import SearchScreen from './SearchScreen'
 import * as BooksAPI from './BooksAPI'
 import './App.css'
 import { Route } from "react-router-dom"
@@ -11,10 +12,9 @@ class BooksApp extends React.Component {
   }
 
   onBookShelfChange = (book, shelf) => {
+    BooksAPI.update(book, shelf)
     this.setState((prevState) => {
-      let bookToMove = prevState.books.find((b) => b.id === book.id)
-
-      bookToMove.shelf = shelf
+      book.shelf = shelf
 
       return prevState.books
     })
@@ -59,18 +59,8 @@ class BooksApp extends React.Component {
         )}/>
 
         <Route path="/search" render={() => (
-          <div className="search-books">
-            <div className="search-books-bar">
-              <Link className="close-search" to="/">Close</Link>
-              <div className="search-books-input-wrapper">
-                <input type="text" placeholder="Search by title or author"/>
-              </div>
-            </div>
-            <div className="search-books-results">
-              <ol className="books-grid"></ol>
-            </div>
-          </div>
-        )} />
+          <SearchScreen books={this.state.books} onBookShelfChange={this.onBookShelfChange}/>
+        )}  />
       </div>
     )
   }

@@ -11,12 +11,22 @@ class BooksApp extends React.Component {
     books: []
   }
 
-  onBookShelfChange = (book, shelf) => {
-    BooksAPI.update(book, shelf)
-    this.setState((prevState) => {
-      book.shelf = shelf
+  onBookShelfChange = (bookToUpdate, shelf) => {
+    BooksAPI.update(bookToUpdate, shelf)
 
-      return prevState.books
+    this.setState((prevState) => {
+      const books = prevState.books
+      const bookInCurrentSet = books.find((b) => b.id === bookToUpdate.id)
+
+      if(bookInCurrentSet) {
+        bookToUpdate = bookInCurrentSet
+      } else {
+        books.push(bookToUpdate)
+      }
+      
+      bookToUpdate.shelf = shelf
+
+      return {books}
     })
   }
 

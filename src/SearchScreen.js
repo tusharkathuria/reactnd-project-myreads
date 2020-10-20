@@ -55,7 +55,12 @@ class BookShelf extends Component {
                 <div className="search-books-bar">
                     <Link className="close-search" to="/">Close</Link>
                     <div className="search-books-input-wrapper">
-                        <input type="text" value={this.state.query} placeholder="Search by title or author" onChange={this.onSearchUpdate}/>
+                        <input
+                            type="text"
+                            value={this.state.query}
+                            placeholder="Search by title or author"
+                            autoFocus={true}
+                            onChange={this.onSearchUpdate}/>
                     </div>
                 </div>
                 <div className="search-books-results">
